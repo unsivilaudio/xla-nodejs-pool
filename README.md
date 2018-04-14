@@ -1,7 +1,7 @@
-cryptonote-nodejs-pool
+cryptonote-stellite-pool
 ======================
 
-High performance Node.js (with native C addons) mining pool for CryptoNote based coins such as Bytecoin, DuckNote, Monero, QuazarCoin, Boolberry, Dashcoin, GRAFT, etc. Comes with lightweight example front-end script which uses the pool's AJAX API.
+High performance Node.js (with native C addons) mining pool for Stellite only. Comes with lightweight example front-end script which uses the pool's AJAX API.
 
 
 
@@ -96,7 +96,7 @@ Community / Support
 
 #### Pools Using This Software
 
-* https://graft.blockhashmining.com/
+* https://xtlpool.com/
 
 
 Usage
@@ -104,9 +104,7 @@ Usage
 
 #### Requirements
 * Coin daemon(s) (find the coin's repo and build latest version from source)
-  * [ByteCoin](https://github.com/amjuarez/bytecoin)
-  * [Monero](https://github.com/monero-project/bitmonero)
-  * [GRAFT](https://github.com/graft-project/GraftNetwork)
+  * [Stellite Coin](https://github.com/stellitecoin/Stellite)
 * [Node.js](http://nodejs.org/) v4.0+
   * For Ubuntu: `sudo apt-get install nodejs npm && ln -s /usr/bin/nodejs /usr/bin/node`
 * [Redis](http://redis.io/) key-value store v2.6+ ([follow these instructions](http://redis.io/topics/quickstart))
@@ -145,16 +143,16 @@ Copy the `config_examples/COIN.json` file of your choice to `config.json` then o
 Explanation for each field:
 ```javascript
 /* Used for storage in redis so multiple coins can share the same redis instance. */
-"coin": "graft",
+"coin": "StelliteCoin",
 
 /* Used for front-end display */
-"symbol": "GRFT",
+"symbol": "XTL",
 
 /* Minimum units in a single coin, see COIN constant in DAEMON_CODE/src/cryptonote_config.h */
-"coinUnits": 10000000000,
+"coinUnits": 100,
 
 /* Coin network time to mine one block, see DIFFICULTY_TARGET constant in DAEMON_CODE/src/cryptonote_config.h */
-"coinDifficultyTarget": 120,
+"coinDifficultyTarget": 60,
 
 /* Enable/Disable support for monero variants */
 "moneroVariant": false,
@@ -194,8 +192,7 @@ Explanation for each field:
     "clusterForks": "auto",
 
     /* Address where block rewards go, and miner payments come from. */
-    "poolAddress": "GBqRuitSoU3PFPBAkXMEnLdBRWXH4iDSD6RDxnQiEFjVJhWUi1UuqfV5EzosmaXgpPGE6JJQjMYhZZgWY8EJQn8jQTsuTit",
-
+    "poolAddress": "Se3uv4ghkuBR2DnDZoEZBiRnd2WnmDkKyYbuTagBeNFcTMQLNZaP6HFX3HvcgUxA4ahtv8avuhXLrJoPf4TbrWWm1A63dxeLU",
     /* Poll RPC daemons for new blocks every this many milliseconds. */
     "blockRefreshInterval": 1000,
 
@@ -293,12 +290,12 @@ Explanation for each field:
     "maxAddresses": 50, // Split up payments if sending to more than this many addresses
     "mixin": 5, // Number of transactions yours is indistinguishable from
     "priority": 0, // The transaction priority    
-    "transferFee": 4000000000, // Fee to pay for each transaction
+    "transferFee": 200, // Fee to pay for each transaction
     "dynamicTransferFee": true, // Enable dynamic transfer fee (fee is multiplied by number of miners)
     "minerPayFee" : true, // Miner pays the transfer fee instead of pool owner when using dynamic transfer fee
-    "minPayment": 100000000000, // Miner balance required before sending payment
+    "minPayment": 10000, // Miner balance required before sending payment
     "maxTransactionAmount": 0, // Split transactions by this amount (to prevent "too big transaction" error)
-    "denomination": 10000000000 // Truncate to this precision and store remainder
+    "denomination": 1// Truncate to this precision and store remainder
 },
 
 /* Module that monitors the submitted block maturities and manages rounds. Confirmed
@@ -349,6 +346,7 @@ Explanation for each field:
     "host": "127.0.0.1",
     "port": 6379,
     "auth": null // If set, client will run redis auth command on connect. Use for remote db
+    "db" : 0 //Select which db to use in redis
 }
 
 /* Email Notifications */
