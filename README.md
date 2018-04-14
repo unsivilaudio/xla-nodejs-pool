@@ -90,9 +90,8 @@ Features
 Community / Support
 ===
 
-* [GitHub Issues for cryptonote-nodejs-pool](https://github.com/dvandal/cryptonote-nodejs-pool/issues)
-* [CryptoNote Technology](https://cryptonote.org)
-* [CryptoNote Forum](https://forum.cryptonote.org/)
+* [GitHub Issues for cryptonote-stellite-pool](https://github.com/ahmyi/cryptonote-stellite-pool/issues)
+* [Discord](https://discord.gg/s6rK4vj)
 
 #### Pools Using This Software
 
@@ -128,7 +127,10 @@ you are using - a good place to start with redis is [data persistence](http://re
 Clone the repository and run `npm update` for all the dependencies to be installed:
 
 ```bash
-git clone https://github.com/dvandal/cryptonote-nodejs-pool.git pool
+nvm install 4.8
+nvm use 4.8
+
+git clone https://github.com/ahmyi/cryptonote-stellite-pool.git pool
 cd pool
 
 npm update
@@ -138,7 +140,7 @@ npm update
 
 *Warning for Cryptonote coins other than Monero:* this software may or may not work with any given cryptonote coin. Be wary of altcoins that change the number of minimum coin units because you will have to reconfigure several config values to account for those changes. Unless you're offering a bounty reward - do not open an issue asking for help getting a coin other than Monero working with this software.
 
-Copy the `config_examples/COIN.json` file of your choice to `config.json` then overview each options and change any to match your preferred setup.
+Copy the `config_examples/stellite.json` file to `config.json` then overview each options and change any to match your preferred setup.
 
 Explanation for each field:
 ```javascript
@@ -541,12 +543,6 @@ Then simply serve the files via nginx, Apache, Google Drive, or anything that ca
 #### SSL
 
 You can configure the API to be accessible via SSL using various methods. Find an example for nginx below:
-
-* Using SSL api in `config.json`:
-
-By using this you will need to update your `api` variable in the `website_example/config.js`. For example:  
-`var api = "https://poolhost:8119";`
-
 * Inside your SSL Listener, add the following:
 
 ``` javascript
@@ -555,8 +551,10 @@ location ~ ^/api/(.*) {
 }
 ```
 
+* Using SSL api in `config.json`:
+
 By adding this you will need to update your `api` variable in the `website_example/config.js` to include the /api. For example:  
-`var api = "http://poolhost/api";`
+`var api = "http://xtlpool.com/api";`
 
 You no longer need to include the port in the variable because of the proxy connection.
 
@@ -564,7 +562,7 @@ You no longer need to include the port in the variable because of the proxy conn
 
 ```bash
 server {
-    server_name api.poolhost.com
+    server_name api.xtlpool.com
     listen 443 ssl http2;
 
     ssl_certificate /your/ssl/certificate;
@@ -583,7 +581,7 @@ server {
 ```
 
 By adding this you will need to update your `api` variable in the `website_example/config.js`. For example:  
-`var api = "//api.poolhost.com";`
+`var api = "//api.xtlpool.com";`
 
 You no longer need to include the port in the variable because of the proxy connection.
 
@@ -614,21 +612,18 @@ curl 127.0.0.1:18081/json_rpc -d '{"method":"getblockheaderbyheight","params":{"
 
 * To inspect and make changes to redis I suggest using [redis-commander](https://github.com/joeferner/redis-commander)
 * To monitor server load for CPU, Network, IO, etc - I suggest using [New Relic](http://newrelic.com/)
-* To keep your pool node script running in background, logging to file, and automatically restarting if it crashes - I suggest using [forever](https://github.com/nodejitsu/forever)
+* To keep your pool node script running in background, logging to file, and automatically restarting if it crashes - I suggest using [pm2](https://github.com/Unitech/pm2)
 
 
 Donations
 ---------
-* BTC: `17XRyHm2gWAj2yfbyQgqxm25JGhvjYmQjm`
-* ETH: `0x83ECF65934690D132663F10a2088a550cA201353`
-* LTC: `LS9To9u2C95VPHKauRMEN5BLatC8C1k4F1`
-* XMR: `49WyMy9Q351C59dT913ieEgqWjaN12dWM5aYqJxSTZCZZj1La5twZtC3DyfUsmVD3tj2Zud7m6kqTVDauRz53FqA9zphHaj`
-* GRFT: `GBqRuitSoU3PFPBAkXMEnLdBRWXH4iDSD6RDxnQiEFjVJhWUi1UuqfV5EzosmaXgpPGE6JJQjMYhZZgWY8EJQn8jQTsuTit`
+* BTC: `3Kp1tkDfEshZDPfizTfVVJB86VmXmUMRqA`
+* XTL: `Se2ef2vWfM5je9M9p9RXnb3YG1Bxm7eLJb4np1TdJmbTfo5VAo43g2EFikEG7wenV2BihjyWmoDL1efXafFfDJoE2GcxJtvH7`
 
 Credits
 ---------
 
-* [fancoder](//github.com/fancoder) - Developper on cryptonote-universal-pool project from which current project is forked.
+* [dvandal](//github.com/dvandal) - Developer on cryptonote-universal-pool project from which current project is forked.
 
 License
 -------
