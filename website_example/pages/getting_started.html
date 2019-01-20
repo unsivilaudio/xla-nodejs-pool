@@ -149,7 +149,7 @@
         
 
 <!-- XMRig -->
-            <tr class="appInfo">
+            <tr class="appInfo" style='display:none'>
                 <td class="miningAppTitle">XTLAndrig</td>
                 <td>CPU (android)</td>
                 <td>An android classic cpu miner</td>
@@ -217,7 +217,7 @@
         "pass": "<span class="examplePassword">YOUR_WORKER_NAME</span>",
         "keepalive": true,
         "nicehash": false,
-        "variant": "xtl"
+        "variant": "cn/2"
     }
 ],</code></pre>
 
@@ -244,7 +244,7 @@
         "pass": "<span class="examplePassword">YOUR_WORKER_NAME</span>"
         "keepalive": true,
         "nicehash": false,
-        "variant": "xtl"
+        "algo": "cn/half"
     }
 ],</code></pre>
 
@@ -271,7 +271,7 @@
         "pass": "<span class="examplePassword">YOUR_WORKER_NAME</span>"
         "keepalive": true,
         "nicehash": false,
-        "variant": "xtl"
+        "algo": "cn/half"
     }
 ],</code></pre>
 
@@ -319,7 +319,7 @@
                     <h4>config.txt</h4>
 <pre><code>"pools": [
     {
-        "cryptonight_type" : "stellitev4",
+        "cryptonight_type" : "stellitev8",
         "intensity" : 0,
         "double_threads" : true,
         "target_temperature" : 0
@@ -419,11 +419,9 @@ currentPage = {
 
         var coin = lastStats.config.coin.toLowerCase() || null;
         var cnAlgorithm ="cryptonight";
-        var cnVariant = 3;
+        var cnVariant = 8;
 
-        algorithm = 'Cryptonight (Stellite v7)';
-        xtlstakAlgo = 'cryptonight_v7_stellite';
-        
+        algorithm = 'Cryptonight (Half Iterations)';        
         xtlstakAlgo = 'stellite';
 
         updateText('cnAlgorithm', algorithm);
