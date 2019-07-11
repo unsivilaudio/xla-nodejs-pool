@@ -16,7 +16,7 @@
         "cryptoforknote-util": "git://github.com/MoneroOcean/node-cryptoforknote-util.git",
         "dateformat": "*",
         "redis": "*",
-        "torquehashing": "git+https://github.com/contribute-torque/torque-hashing.git#cn_rys_stable"
+        "torque-hashing": "git+https://github.com/contribute-torque/torque-hashing.git#cn_rys_stable"
     },
     "engines": {
         "node": ">=8.0"
