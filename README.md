@@ -1,4 +1,4 @@
-xtl-nodejs-pool
+xla-nodejs-pool
 ======================
 
 High performance Node.js (with native C addons) mining pool for Stellite coin. Comes with lightweight example front-end script which uses the pool's AJAX API. Support for Cryptonight Stellite v7 algorithms.
@@ -16,6 +16,7 @@ Credits
 * [fancoder](https://github.com/fancoder/cryptonote-universal-pool)
 * [zone117x](https://github.com/zone117x/node-cryptonote-pool)
 * [jagerman](https://github.com/jagerman/node-cryptonote-pool)
+* [unsivilaudio](https://github.com/unsivilaudio/xla-nodejs-pool)
  
 License
 -------
