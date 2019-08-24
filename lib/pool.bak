@@ -45,17 +45,7 @@ var log = function(severity, system, text, data){
     global.log(severity, system, threadId + text, data);
 };
 
-//define default params
-let cnAlgorithm = config.cnAlgorithm || "cryptonight";
-let cnVariant = config.cnVariant || 0;
-let cnBlobType = config.cnBlobType || 0;
-
-let cryptoNight;
-if (!cnHashing || !cnHashing[cnAlgorithm]) {
-    log('error', logSystem, 'Invalid cryptonight algorithm: %s', [cnAlgorithm]);
-} else {
-    cryptoNight = cnHashing[cnAlgorithm];
-}
+let defyX = require('cryptonight-hashing')['randomx'];
 
 // Set instance id
 var instanceId = utils.instanceId();
@@ -114,7 +104,7 @@ setInterval(function(){
     for (var minerId in connectedMiners){
         var miner = connectedMiners[minerId];
         if (now - miner.lastBeat > timeout){
-            log('warn', logSystem, 'Miner timed out and disconnected %s@%s', [miner.login, miner.ip]);
+            // log('warn', logSystem, 'Miner timed out and disconnected %s@%s', [miner.login, miner.ip]);
             delete connectedMiners[minerId];
             removeConnectedWorker(miner, 'timeout');
         }
@@ -154,9 +144,9 @@ const BlockTemplate = function (template){
     this.height = template.height;
     this.seed_hash = template.seed_hash;
     this.reserveOffset = template.reserved_offset;
-    this.buffer = Buffer.from(this.blob, 'hex');
+    this.buffer = new Buffer(this.blob, 'hex');
     instanceId.copy(this.buffer, this.reserveOffset + 4, 0, 3);
-    this.previous_hash = Buffer.alloc(32);
+    this.previous_hash = new Buffer(32);
     this.buffer.copy(this.previous_hash, 0, 7, 39);
     this.extraNonce = 0;
     this.prev_hash = template.prev_hash;
@@ -338,7 +328,7 @@ Miner.prototype = {
             this.pendingDifficulty = null;
         }
 
-        var padded = Buffer.alloc(32);
+        var padded = new Buffer(32);
         padded.fill(0);
 
         var diffBuff = diff1.div(this.difficulty).toBuffer();
@@ -346,7 +336,7 @@ Miner.prototype = {
 
         var buff = padded.slice(0, 4);
         var buffArray = buff.toByteArray().reverse();
-        var buffReversed = Buffer.from(buffArray);
+        var buffReversed = new Buffer(buffArray);
         this.target = buffReversed.readUInt32BE(0);
         var hex = buffReversed.toString('hex');
         return hex;
@@ -365,8 +355,6 @@ Miner.prototype = {
                 id: utils.uid(),
                 extraNonce: currentBlockTemplate.extraNonce,
                 height: currentBlockTemplate.height,
-                seed_hash: currentBlockTemplate.seed_hash,
-                next_seed_hash: currentBlockTemplate.next_seed_hash,
                 difficulty: this.difficulty,
                 diffHex: this.diffHex,
                 submissions: []
@@ -382,11 +370,8 @@ Miner.prototype = {
                 job_id: newJob.id,
                 target: target,
                 id: this.id,
+        	algo:"defyx",
             };
-            if (newJob.seed_hash) {
-                this.cachedJob.seed_hash = newJob.seed_hash;
-                this.cachedJob.next_seed_hash = newJob.next_seed_hash;
-            }
         }else {
             var blob = currentBlockTemplate.nextBlobWithChildNonce();
 
@@ -397,8 +382,6 @@ Miner.prototype = {
                 id: utils.uid(),
                 extraNonce: currentBlockTemplate.extraNonce,
                 height: currentBlockTemplate.height,
-                seed_hash: currentBlockTemplate.seed_hash,
-                next_seed_hash: currentBlockTemplate.next_seed_hash,
                 difficulty: this.difficulty,
                 diffHex: this.diffHex,
                 clientPoolLocation: currentBlockTemplate.clientPoolLocation,
@@ -412,6 +395,7 @@ Miner.prototype = {
                 this.validJobs.shift();
 
             this.cachedJob = {
+        	algo:"defyx",
                 blocktemplate_blob: blob,
                 difficulty: currentBlockTemplate.difficulty,
                 height: currentBlockTemplate.height,
@@ -423,16 +407,9 @@ Miner.prototype = {
                 job_id: newJob.id,
                 id: this.id
             };
-            if (newJob.seed_hash) {
-                this.cachedJob.seed_hash = newJob.seed_hash;
-                this.cachedJob.next_seed_hash = newJob.next_seed_hash;
-            }
+
         }
-        if (typeof config.includeAlgo !== "undefined" && config.includeAlgo)
-            this.cachedJob['algo'] = config.includeAlgo
-        if (typeof config.includeHeight !== "undefined" && config.includeHeight)
-            this.cachedJob['height'] = currentBlockTemplate.height
-        return this.cachedJob;
+		return this.cachedJob;
     },
     checkBan : function(validShare){
         if (!banningEnabled) return;
@@ -867,7 +844,7 @@ function recordShareData(miner, job, shareDiff, blockCandidate, hashHex, shareTy
 
     });
 
-    log('info', logSystem, 'Accepted %s share %d at difficulty %d from %s@%s%s', [shareType, job.difficulty, shareDiff, miner.login, miner.workerName, miner.ip]);
+    // log('info', logSystem, 'Accepted %s share %d at difficulty %d from %s@%s', [shareType, job.difficulty, shareDiff, miner.login, miner.ip]);
 }
 
 /**
@@ -876,7 +853,7 @@ function recordShareData(miner, job, shareDiff, blockCandidate, hashHex, shareTy
 function processShare(miner, job, blockTemplate, params){
     var nonce = params.nonce;
     var resultHash = params.result;
-    var template = Buffer.alloc(blockTemplate.buffer.length);
+    var template = new Buffer(blockTemplate.buffer.length);
     if (!miner.proxy) {
         blockTemplate.buffer.copy(template);
         template.writeUInt32BE(job.extraNonce, blockTemplate.reserveOffset);
@@ -887,22 +864,34 @@ function processShare(miner, job, blockTemplate, params){
         template.writeUInt32BE(params.workerNonce, job.clientNonceLocation);
     }
 
-    var shareBuffer = utils.cnUtil.construct_block_blob(template, Buffer.from(nonce, 'hex'), cnBlobType);
+    var shareBuffer = utils.cnUtil.construct_block_blob(template, new Buffer(nonce, 'hex'), 0);
 
     var hash;
     var shareType;
-    let convertedBlob;
+    let convertedBlob = utils.cnUtil.convert_blob(shareBuffer);
 
     if (shareTrustEnabled && miner.trust.threshold <= 0 && miner.trust.penalty <= 0 && Math.random() > miner.trust.probability){
-        hash = Buffer.from(resultHash, 'hex');
+        hash = new Buffer(resultHash, 'hex');
         shareType = 'trusted';
     } else {
-        let convertedBlob = utils.cnUtil.convert_blob(shareBuffer, cnBlobType);
+
         let hard_fork_version = convertedBlob[0];
-        let variant = cnVariant;
-        hash = cryptoNight(convertedBlob, Buffer.from(blockTemplate.seed_hash, 'hex'));
-//	console.log(hash.toString('hex'));
-//	console.log(resultHash);
+        let variant = 0;
+        if(hard_fork_version == 3){
+            variant = 1;
+        } else if(hard_fork_version == 4){
+            variant = 3;
+        } else if(hard_fork_version > 4){
+            variant = 8;
+        } else {
+	    variant = 17;
+	}
+//        hash = cryptonight(convertedBlob,variant);
+	console.log(convertedBlob.toString('hex'));
+	console.log(blockTemplate.seed_hash);
+        hash = defyX(convertedBlob, Buffer.from(blockTemplate.seed_hash, 'hex'), 1);
+	console.log(hash.toString('hex'));
+	console.log(resultHash);
         shareType = 'valid';
 //        log('info', logSystem, 'Mining pool algorithm: %s variant %d, Hard fork version: %d', [cnAlgorithm, cnVariant, hard_fork_version]);
     }
@@ -913,7 +902,7 @@ function processShare(miner, job, blockTemplate, params){
     }
 
     var hashArray = hash.toByteArray().reverse();
-    var hashNum = bignum.fromBuffer(Buffer.from(hashArray));
+    var hashNum = bignum.fromBuffer(new Buffer(hashArray));
     var hashDiff = diff1.div(hashNum);
 
     if (hashDiff.ge(blockTemplate.difficulty)){
