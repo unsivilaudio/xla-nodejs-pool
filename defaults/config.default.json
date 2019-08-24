@@ -1,8 +1,12 @@
 {
-    "coin": "Stellitecoin",
-    "symbol": "XTL",
+    "coin": "Scala",
+    "symbol": "XLA",
     "coinUnits":100,
     "coinDifficultyTarget": 300,
+    "algorithm" : "randomx",
+    "cnVariant" : 4,
+    "cnBlobType" : 10,
+
     "logging": {
         "files": {
         "enabled":false,
@@ -19,7 +23,7 @@
     	"timeout":1000,
         "enabled": true,
         "clusterForks": "auto",
-		"poolAddress":"Se4EaQbQt9dWocr5RGWuRqdJcxaatTwydbfio8mBUNWuE5iYeZJzcHC3S5M3Jn5kBQdwB6w7kFE2yC6nrNtvXQ1E2oFPis9fF",
+	"poolAddress":"SEiTBcLGpfm3uj5b5RaZDGSUoAGnLCyG5aJjAwko67jqRwWEH26NFPd26EUpdL1zh4RTmTdRWLz8WCmk5F4umYaFByMtJT6RLjD6vzApQJWfi",
         "blockRefreshInterval": 500,
         "minerTimeout": 750,
         "sslCert": "./cert.pem",
@@ -31,7 +35,18 @@
                 "difficulty": 50,
                 "desc": "Low end hardware (1 ~ 100H/s) diff: 4000",
 				"donation":0
+            },
+	    {
+                "port": 5555,
+                "difficulty": 240000,
+                "desc": "High end hardware"
+            },
+            {
+                "port": 7777,
+                "difficulty": 1000000,
+                "desc": "Cloud-mining / NiceHash"
             }
+
 		],
         "varDiff": {
             "minDiff": 100,
@@ -52,7 +67,7 @@
         "donations":{
 			"enabled": true,
 			"addressSeparator":"%",
-			"address":"Se3dRf8ZTUXKYivaTFU4KYczPcmMcwPZWEQ5HZmj3RRviFJ3w1mNhtgCWkn6VsnQcMBX1hyCUjZVuSo8X7yJTSYj1joP84WoT"
+			"address":"SEiTBcLGpfm3uj5b5RaZDGSUoAGnLCyG5aJjAwko67jqRwWEH26NFPd26EUpdL1zh4RTmTdRWLz8WCmk5F4umYaFByMtJT6RLjD6vzApQJWfi"
 		},
         "shareTrust": {
             "enabled": true,
@@ -90,12 +105,12 @@
         "denomination": 100
     },
 	"contributions":{
-		"Se2ef2vWfM5je9M9p9RXnb3YG1Bxm7eLJb4np1TdJmbTfo5VAo43g2EFikEG7wenV2BihjyWmoDL1efXafFfDJoE2GcxJtvH7": {
+		"SEiTBcLGpfm3uj5b5RaZDGSUoAGnLCyG5aJjAwko67jqRwWEH26NFPd26EUpdL1zh4RTmTdRWLz8WCmk5F4umYaFByMtJT6RLjD6vzApQJWfi": {
 			"percent":0.3,
 			"desc":"Pool Contributions",
 			"hidden":false
 		},
-		"Se3dRf8ZTUXKYivaTFU4KYczPcmMcwPZWEQ5HZmj3RRviFJ3w1mNhtgCWkn6VsnQcMBX1hyCUjZVuSo8X7yJTSYj1joP84WoT": {
+		"SEiTBcLGpfm3uj5b5RaZDGSUoAGnLCyG5aJjAwko67jqRwWEH26NFPd26EUpdL1zh4RTmTdRWLz8WCmk5F4umYaFByMtJT6RLjD6vzApQJWfi": {
 			"percent":0.1,
 			"desc":"Foundation Contributions",
 			"hidden":false
