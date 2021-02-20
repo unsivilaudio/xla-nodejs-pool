@@ -1,9 +1,15 @@
-var api="http://testnet.xtlpool.com:8118";
-var poolHost="testnet.xtlpool.com";
-var email="support@xtlpool.com";
-var telegram="";
-var discord="https://discord.gg/zng9k2D";
-var marketCurrencies=["{symbol}-BTC","{symbol}-USD","{symbol}-EUR","{symbol}-CAD"];
-var blockchainExplorer="https://testexplorer.stellite.cash/search?value={id}";
-var transactionExplorer="https://testexplorer.stellite.cash/search?value={id}";
-var themeCss="themes/stellite.css";
+var api = 'http://scala.ethospool.org:8118';
+var poolHost = 'scala.ethospool.org';
+var email = 'support@ethospool.org';
+var telegram = '';
+var discord = 'https://discord.gg/s5qGMsp';
+var marketCurrencies = [
+    '{symbol}-BTC',
+    '{symbol}-USD',
+    '{symbol}-EUR',
+    '{symbol}-CAD',
+];
+var blockchainExplorer =
+    'https://explorer.scalaproject.io/block?block_info={id}';
+var transactionExplorer = 'https://explorer.scalaproject.io/tx/{id}';
+var themeCss = 'themes/dark.css';
