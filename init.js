@@ -98,7 +98,7 @@ if (cluster.isWorker){
 require('./lib/exceptionWriter.js')(logSystem);
 
 // Pool informations
-log('info', logSystem, 'Starting Stellite Node.JS pool version %s', [global.version]);
+log('info', logSystem, 'Starting Scala Node.JS pool version %s', [global.version]);
 
 /**
  * Start modules

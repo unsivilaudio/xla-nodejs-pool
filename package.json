@@ -1,25 +1,25 @@
 {
-    "name": "xtl-nodjes-pool",
-    "version": "2.1.0",
+    "name": "xla-nodejs-pool",
+    "version": "1.5.0",
     "license": "GPL-2.0",
-    "author": "@stellitecoin",
+    "author": "@scalaproject",
     "repository": {
         "type": "git",
-        "url": "https://github.com/stellitecoin/xtl-nodejs-pool.git"
+        "url": "https://github.com/unsivilaudio/xla-nodejs-pool.git"
     },
     "dependencies": {
+        "args-parser": "*",
         "async": "1",
         "base58-native": "*",
         "bignum": "*",
         "cli-color": "*",
-        "args-parser": "*",
-        "cryptonight-hashing": "git+https://github.com/hayzamjs/node-cryptonight-hashing.git",
         "cryptoforknote-util": "git://github.com/MoneroOcean/node-cryptoforknote-util.git",
+        "cryptonight-hashing": "git://github.com/MoneroOcean/node-cryptonight-hashing.git",
         "dateformat": "*",
         "redis": "*"
     },
     "engines": {
-        "node": ">=8.0"
+        "node": ">=11.0"
     },
     "devDependencies": {
         "jest": "^23.6.0"
